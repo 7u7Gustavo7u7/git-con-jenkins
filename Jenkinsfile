@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+environment {
+registry = "arramsyah/docker-rest-api-app"
+registryCredential = 'edec5687-20f9-4c33-9118-e70d1f5be7f9'
+dockerImage = ''
+}
+agent any
 
     stages {
         stage('Checkout') {
