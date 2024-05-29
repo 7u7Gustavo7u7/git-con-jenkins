@@ -5,7 +5,7 @@ pipeline {
         stage('Obtener código') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main', url: 'https://github.com/gamiMTZ/ejemplopipeline.git'
+                git branch: 'main', url: 'https://github.com/7u7Gustavo7u7/git-con-jenkins.git'
             }
         }
 
