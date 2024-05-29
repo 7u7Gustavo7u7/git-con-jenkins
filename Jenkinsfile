@@ -1,50 +1,47 @@
+public class holamundo {
+    public static void main(String[] args) {
+        System.out.println("hola mundo");
+    }
+}
+// mostrarEnConsola()
+####### este es el bueno ###########
 pipeline {
     agent any
 
     stages {
-        stage('Obtener código') {
+        stage('Checkout') {
             steps {
-                // Get some code from a GitHub repository
-                git branch: 'main', url: 'https://github.com/7u7Gustavo7u7/git-con-jenkins.git'
+                // Clona el repositorio desde GitHub
+                git branch:"main", url: 'https://github.com/7u7Gustavo7u7/git-con-jenkins.git'
             }
         }
 
-        stage('Compilar código') {
-            steps {
-                echo 'Inicio de compilación del código'
-                // Check if javac is available
-                sh 'which javac  echo "javac not found"'
-                // Compile Java program
-                sh 'javac Programa.java  echo "javac failed"'
-                echo 'Fin de compilación del código'
-
-                echo 'Ejecución del código en python'
-                // Check if python3 is available
-                sh 'which python3  echo "python3 not found"'
-                // Run Python script
-                sh 'python3 Programa.py  echo "python3 execution failed"'
-            }
-        }
-
-        stage('Test') {
+        stage('Compile') {
             steps {
                 script {
-                    // Search for the method showInConsole in Programa.java
-                    def result = sh(script: 'grep -q "mostrarEnConsola()" Programa.java', returnStatus: true)
-                    if (result != 0) {
-                        error('Method mostrarEnConsola() not found in Programa.java')
+                    // Verifica si el archivo HolaMundo.java existe
+                    if (fileExists('holamundo.java')) {
+                        echo 'Compiling HolaMundo.java'
+                        // Compila el archivo Java
+                        sh 'javac holamundo.java'
                     } else {
-                        echo 'Method mostrarEnConsola() found in Programa.java'
+                        error 'File HolaMundo.java not found'
                     }
                 }
             }
         }
 
-        stage("Ejecución") {
+   stage('Test') {
             steps {
-                echo 'Ejecutando programa'
-                // Run the compiled Java program
-                sh 'java Programa || echo "java execution failed"'
+                script {
+                    // Search for the method showInConsole in Programa.java
+                    def result = sh(script: 'grep -q "mostrarEnConsola()" holamundo.java', returnStatus: true)
+                    if (result != 0) {
+                        error('Method mostrarEnConsola() not found in holamundo.java')
+                    } else {
+                        echo 'Method mostrarEnConsola() found in holamundo.java'
+                    }
+                }
             }
         }
     }
