@@ -1,5 +1,11 @@
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("¡Hola Mundo desde Java!");
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hola, Mundo'
+            }
+        }
     }
 }
