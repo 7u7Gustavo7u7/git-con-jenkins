@@ -2,13 +2,13 @@ pipeline {
     agent {
         docker {
             image 'node:16-buster-slim'
-            args '-p 3000:3000'
+            args '-p 50000:50000'
         }
     }
 
     environment {
         registry = "7u7gustavo7u7/repositorio_produccion"
-        registryCredential = 'edec5687-20f9-4c33-9118-e70d1f5be7f9'  // Este es el ID de tus credenciales
+        registryCredential = 'edec5687-20f9-4c33-9118-e70d1f5be7f9'
         dockerImage = ''
     }
 
@@ -33,7 +33,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build "${registry}:${env.BUILD_ID}"
+                    dockerImage = docker.build("${registry}:${env.BUILD_ID}")
                 }
             }
         }
